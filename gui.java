@@ -25,6 +25,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
+import javafx.geometry.Pos;
+import javafx.scene.text.Text;
+import javafx.scene.control.ChoiceBox;
 
 public class gui extends Application {
     private TextField login_user, create_login_user;
@@ -32,16 +36,23 @@ public class gui extends Application {
     private Label loginError, userError, passError;
     private login login = new login();
     private Pane create_Pane;
-    private Button LI_enter_Bt1, create_enter_Bt, create_back_Bt, create_Bt, search_Bt, help_Bt, logoff_Bt, search_back_Bt;
-    private Scene login_Scene, create_Scene, menu_Scene, search_Scene;
+    public StackPane assess_Pane;
+    private Button LI_enter_Bt1, create_enter_Bt, create_back_Bt, create_Bt, 
+                    search_Bt, help_Bt, logoff_Bt, search_back_Bt, next_Bt,
+                    last_Bt, return_Bt, start_Bt, backToMenu_Bt;
+    private Scene login_Scene, create_Scene, menu_Scene, search_Scene, assess_Scene;
     //public Scene login_Scene, create_Scene, menu_Scene, search_Scene;
     public Button back_Bt1;
     public Node enter_Bt2;
-    private Node start_Bt;
     public Node logoff_Bt1;
     private Button enter_Bt3;
     public int loginCheck = 0;
     public static int end = 0;
+    public int questionNumber;
+    public questions questions = new questions();
+    public Text text;
+    public ChoiceBox tenChoice, fourChoice;
+
     Label title = new Label(" Informal Cognitive Linguistic Assessment");
 
     public void setupLogin() {
@@ -292,13 +303,54 @@ public class gui extends Application {
         search_Pane.getChildren().addAll(search_back_Bt);
         search_Scene = new Scene(search_Pane, 600, 400);
     }
+
+    public void setupAssess() {
+        assess_Pane = new StackPane();
+        assess_Pane.setStyle("-fx-background-color: white");        
+
+        tenChoice = new ChoiceBox();
+        tenChoice.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+        StackPane.setAlignment(tenChoice, Pos.CENTER);
+        tenChoice.setTranslateY(30);
+
+        fourChoice = new ChoiceBox();
+        fourChoice.getItems().addAll("None", "Mid", "Moderate", "Max");
+        StackPane.setAlignment(fourChoice, Pos.CENTER);
+        fourChoice.setTranslateY(30);
+
+        text = new Text();
+        text.setText(questions.getQuestion(questionNumber));
+        StackPane.setAlignment(text, Pos.CENTER);
+
+        next_Bt = new Button("Next");
+        StackPane.setAlignment(next_Bt, Pos.BOTTOM_RIGHT);
+        next_Bt.setTranslateY(-15);
+        next_Bt.setTranslateX(-15);
+
+        last_Bt = new Button("Last");
+        StackPane.setAlignment(last_Bt, Pos.BOTTOM_LEFT);
+        last_Bt.setTranslateY(-15);
+        last_Bt.setTranslateX(15);
+
+        backToMenu_Bt = new Button("Save and Return to Menu");
+        StackPane.setAlignment(backToMenu_Bt, Pos.TOP_LEFT);
+        backToMenu_Bt.setTranslateY(15);
+        backToMenu_Bt.setTranslateX(15);
+
+        assess_Pane.getChildren().addAll(next_Bt, last_Bt, backToMenu_Bt, text);
+
+        assess_Scene = new Scene(assess_Pane, 600, 400);
+    }
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
+        questionNumber = 0;
         // Setup each scene of the menus
         setupCreate();
         setupMenu();
         setupSearch();
         setupLogin();
+        setupAssess();
         // Establish function of each button
         create_Bt.setOnAction(e ->{
             try {
@@ -329,7 +381,6 @@ public class gui extends Application {
         }
 
         create_enter_Bt.setOnAction(e ->{
-
             //adds info to system and brings to main menu
             if (login.checkKey(create_login_user.getText())) {
                 userError.setVisible(true);
@@ -352,16 +403,18 @@ public class gui extends Application {
             }
 
         });
-        create_back_Bt.setOnAction(e ->{
 
+        create_back_Bt.setOnAction(e ->{
             primaryStage.setScene(login_Scene);
             primaryStage.show();
         });
-        //start_Bt.setOnAction(e ->{
-        // Will link to survey start
-        //	});
-        search_Bt.setOnAction(e ->{
 
+        start_Bt.setOnAction(e ->{
+            primaryStage.setScene(assess_Scene);
+            primaryStage.show();
+    	});
+
+        search_Bt.setOnAction(e ->{
             primaryStage.setScene(search_Scene);
             primaryStage.show();
         });
@@ -375,11 +428,40 @@ public class gui extends Application {
             primaryStage.setScene(menu_Scene);
             primaryStage.show();
         });
+
         logoff_Bt.setOnAction(e ->{
-            login_Pass.clear();
+           // login_Pass.hide();
             primaryStage.setScene(login_Scene);
             primaryStage.show();
         });
+
+        next_Bt.setOnAction(e ->{
+
+            text.setText(questions.getQuestion(++questionNumber));
+
+            if (questionNumber == 1) {
+                assess_Pane.getChildren().add(fourChoice);
+            } else if (questionNumber == 18) {
+                assess_Pane.getChildren().remove(fourChoice);
+                assess_Pane.getChildren().add(tenChoice);
+            }
+
+        });
+
+        last_Bt.setOnAction(e ->{
+
+            if (questionNumber > 0) {
+                text.setText(questions.getQuestion(--questionNumber));
+            }
+
+            if (questionNumber < 18 && questionNumber > 0) {
+                assess_Pane.getChildren().add(fourChoice);
+            } else if (questionNumber > 18) {
+                assess_Pane.getChildren().remove(fourChoice);
+                assess_Pane.getChildren().add(tenChoice);
+            }
+        });
+
 
         primaryStage.setScene(login_Scene);
         primaryStage.setTitle("Informal Cognitive Linguistic Assessment");
