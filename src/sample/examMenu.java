@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 
 public class examMenu extends Scene {
@@ -21,7 +22,8 @@ public class examMenu extends Scene {
     private int questionNumber = 0;
     private double progress = 0.0;
     private double increment = 0.0238;
-    int[] answers = new int[19];
+    int[] PLOFanswers = new int[19];
+    String[] answers = new String[24];
     int[] test = new int[5];
     ProgressBar bar;
 
@@ -41,6 +43,7 @@ public class examMenu extends Scene {
             assess_Pane.setAlignment(tenChoice, Pos.CENTER);
             tenChoice.setTranslateY(30);
             tenChoice.setVisible(false);
+            //tenChoice.setValue("0");
 
             fourChoice = new ChoiceBox();
             fourChoice.getItems().addAll("None", "Mid", "Moderate", "Max");
@@ -71,28 +74,28 @@ public class examMenu extends Scene {
             StackPane.setAlignment(next_Bt, Pos.BOTTOM_RIGHT);
             next_Bt.setTranslateY(-15);
             next_Bt.setTranslateX(-15);
-            next_Bt.setOnAction(e -> {text.setText(questions.getQuestion(++questionNumber));
-            						if (questionNumber == 1) {
-            							tenChoice.setVisible(true);
-            						} else if (questionNumber == 18) {
-            							fourChoice.setVisible(true);
-            							tenChoice.setVisible(false);
-            						} else if (questionNumber == 42) {
-            							questionNumber = 41;
-            							text.setText("End of Assessment");
-            							next_Bt.setVisible(false);
-            						};
-            						bar.setProgress(progress += increment);
-            						caseSwitch();
-            						if (questionNumber > 1) {
-            							answers[questionNumber] = Integer.parseInt(tenChoice.getValue().toString());
-            						}
-            						for (int i = 0; i < answers.length; i++) {
-            							System.out.println(answers[i]);
-            						}
-            						tenChoice.getSelectionModel().clearSelection();
-        						});
-
+	        next_Bt.setOnAction(e -> {text.setText(questions.getQuestion(++questionNumber));
+	            						if (questionNumber == 1) {
+	            							tenChoice.setVisible(true);
+	            						} else if (questionNumber == 18) {
+	            							fourChoice.setVisible(true);
+	            							tenChoice.setVisible(false);
+	            						} else if (questionNumber == 42) {
+	            							questionNumber = 41;
+	            							text.setText("End of Assessment");
+	            							next_Bt.setVisible(false);
+	            						};
+	            						bar.setProgress(progress += increment);
+	            						caseSwitch();
+	            						if (questionNumber > 18) {
+	            							answers[questionNumber - 18] = fourChoice.getValue().toString();
+	            						} else if (questionNumber > 1) {
+	            							PLOFanswers[questionNumber - 1] = Integer.parseInt(tenChoice.getValue().toString());
+	            						}	            					
+	            						tenChoice.getSelectionModel().clearSelection();
+	            						fourChoice.getSelectionModel().clearSelection();
+	        						});
+	        
             last_Bt = new Button("Last");
             last_Bt.setStyle("-fx-font-size: 15 arial; "
             		+ "-fx-background-color: #1dbfdb; "
@@ -119,7 +122,11 @@ public class examMenu extends Scene {
             StackPane.setAlignment(backToMenu_Bt, Pos.TOP_LEFT);
             backToMenu_Bt.setTranslateY(15);
             backToMenu_Bt.setTranslateX(15);
-            backToMenu_Bt.setOnAction(e -> paneController.enterMainMenu());
+            backToMenu_Bt.setOnAction(e -> {paneController.enterMainMenu();
+            							System.out.print(sumArray(PLOFanswers));
+            							System.out.print(sumStringArray(answers));
+							
+            });
 
             assess_Pane.getChildren().addAll(next_Bt, last_Bt, backToMenu_Bt, text, tenChoice, fourChoice, bar, section);
 
@@ -159,6 +166,18 @@ public class examMenu extends Scene {
 					section.setText("Pragmatics");
 					break;
 			}
+    	}
+    	
+    	public int sumArray(int[] array) {
+    		return IntStream.of(array).sum();
+    	}
+    	
+    	public int sumStringArray(String[] array) {
+    		int sum = 0;
+    		for (int i = 0; i < array.length; i++) {
+    			arra
+    		}
+    		return 0;
     	}
     
 }
