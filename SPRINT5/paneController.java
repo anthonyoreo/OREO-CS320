@@ -140,11 +140,17 @@ public class paneController {
 		info = patientInfo;
 	}
 	
-	public void print() {
+	public static void print() {
 		for (int i = 0; i < info.length; i++) {
 			System.out.println(info[i]);
 		}
 	}
+	
+	public String getName() {
+		return info[0];
+	}
+
+    
 
 
     

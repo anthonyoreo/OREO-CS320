@@ -34,8 +34,7 @@ public class resultsMenu extends Scene {
             title.setStyle("-fx-font: 25 arial;");
             title.setTranslateX(70);
             resultsPane.getChildren().add(title);
-
-
+            
             answers = paneController.getAnswers();
             results = paneController.getResults();
             double maxResult = 0;
@@ -58,7 +57,7 @@ public class resultsMenu extends Scene {
                 }
             }
 
-            String patientNameIn = "hello";
+            String patientNameIn = paneController.getName();
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
             LocalDate localDate = LocalDate.now();
             //System.out.println(dtf.format(localDate)); //2016/11/16
