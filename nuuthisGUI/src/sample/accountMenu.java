@@ -18,9 +18,9 @@ public class accountMenu extends Scene{
     private loginDB login = new loginDB();
     private Button create_enter_Bt, create_back_Bt;
     private paneController paneController;
-    private Label userError, passError;
+    private Label userError, passError, noInfoError;
 
-    Label title = new Label(" Informal Cognitive Linguistic Assessment");
+    Label title = new Label("Informal Cognitive Linguistic Assessment");
 
     public accountMenu(Parent root, double width, double height) {
         super(root, width, height);
@@ -107,30 +107,43 @@ public class accountMenu extends Scene{
         create_enter_Bt.setLayoutX(325);
         create_enter_Bt.setLayoutY(300);
         create_enter_Bt.setStyle("-fx-font-size: 15 arial; ");
+        
+        noInfoError = new Label();
+        noInfoError.setTranslateX(250);
+        noInfoError.setTranslateY(85);
+        create_Pane.getChildren().add(noInfoError);
 
         create_enter_Bt.setOnAction(e ->{
 
+        	if (create_login_user.getText() == null || create_login_user.getText().trim().isEmpty() ||
+        		conlogin_Pass.getText() == null || conlogin_Pass.getText().trim().isEmpty() ||
+        		create_login_Pass.getText() == null || create_login_Pass.getText().trim().isEmpty()) {
+        			noInfoError.setVisible(true);
+        			noInfoError.setText("Please enter a username, password, and confirmation password");
+        	} else {
             //adds info to system and brings to main menu
-            if (login.checkKey(create_login_user.getText())) {
-                passError.setVisible(false);
-                userError.setVisible(true);
-                conlogin_Pass.clear();
-            } else {
-                if (conlogin_Pass.getText().equals(create_login_Pass.getText())) {
-                    login.setUsername(create_login_user.getText());
-                    login.setPassword(create_login_Pass.getText());
-                    try {
-                        login.putInfo();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    paneController.enterMainMenu();
-                } else {
-                    conlogin_Pass.clear();
-                    userError.setVisible(false);
-                    passError.setVisible(true);
-                }
-            }
+        		noInfoError.setVisible(false);
+	            if (login.checkKey(create_login_user.getText())) {
+	                passError.setVisible(false);
+	                userError.setVisible(true);
+	                conlogin_Pass.clear();
+	            } else {
+	                if (conlogin_Pass.getText().equals(create_login_Pass.getText())) {
+	                    login.setUsername(create_login_user.getText());
+	                    login.setPassword(create_login_Pass.getText());
+	                    try {
+	                        login.putInfo();
+	                    } catch (IOException ex) {
+	                        ex.printStackTrace();
+	                    }
+	                    paneController.enterMainMenu();
+	                } else {
+	                    conlogin_Pass.clear();
+	                    userError.setVisible(false);
+	                    passError.setVisible(true);
+	                }
+	            }
+        	}
 
         });
 

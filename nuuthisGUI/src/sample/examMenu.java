@@ -18,7 +18,7 @@ public class examMenu extends Scene {
 
     private ChoiceBox tenChoice, fourChoice;
     private Button next_Bt, last_Bt, backToMenu_Bt, seeResults_Bt;
-    private Text text, section;
+    private Text text, section, exam;
     private int questionNumber = 0;
     private double progress = 0.0;
     private double increment = 0.0238;
@@ -65,6 +65,11 @@ public class examMenu extends Scene {
         StackPane.setAlignment(section, Pos.CENTER);
         section.setTranslateX(-150);
         section.setTranslateY(-60);
+        
+        exam = new Text();
+        StackPane.setAlignment(exam,  Pos.CENTER);
+        exam.setTranslateY(-100);
+        exam.setStyle("-fx-font-size: 25 arial; ");
 
         text = new Text();
         text.setText(questions.getQuestion(questionNumber));
@@ -177,7 +182,7 @@ public class examMenu extends Scene {
 
         });
 
-        assess_Pane.getChildren().addAll(next_Bt, last_Bt, backToMenu_Bt, text, tenChoice, fourChoice, bar, section, seeResults_Bt);
+        assess_Pane.getChildren().addAll(next_Bt, last_Bt, backToMenu_Bt, text, tenChoice, fourChoice, bar, section, seeResults_Bt, exam);
 
         return assess_Pane;
     }
@@ -186,6 +191,7 @@ public class examMenu extends Scene {
         switch (questionNumber-1) {
             case 1:
                 section.setText("Auditory Processing");
+                exam.setText("Prior Level of Function");
                 tmp = questionNumber;
                 break;
             case 4:
@@ -230,6 +236,7 @@ public class examMenu extends Scene {
             case 18:
                 //tmp = questionNumber;
                 section.setText("Auditory Processing");
+                exam.setText("Patient Exam");
                 plofResults[4] = (6/5) * (sumArray());
                 paneController.setPlofResults(plofResults[4]);
                 break;

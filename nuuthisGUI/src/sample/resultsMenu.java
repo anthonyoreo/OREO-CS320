@@ -46,7 +46,7 @@ public class resultsMenu extends Scene {
                 Text textResults = new Text();
                 textResults.setText(resultsOutput(results[resultsOutputs], resultsOutputs));
                 textResults.setTranslateX(350);
-                textResults.setTranslateY((resultsOutputs*30) + 420);
+                textResults.setTranslateY((resultsOutputs * 40) + 330);
                 resultsPane.getChildren().addAll(textResults);
                 if (results[resultsOutputs] > maxResult)
                 {
@@ -78,7 +78,7 @@ public class resultsMenu extends Scene {
                 Text infoText = new Text();
                 infoText.setText(patientInfo[infoTotal]);
                 infoText.setTranslateX(350);
-                infoText.setTranslateY((infoTotal * 30) + 50);
+                infoText.setTranslateY((infoTotal * 40) + 80);
                 resultsPane.getChildren().addAll(infoText);
             }
 
@@ -90,11 +90,11 @@ public class resultsMenu extends Scene {
 
                 scoresTotalarr[scoresTotal] = new Label(scoresTotalStringarr[scoresTotal]);
                 scoresTotalarr[scoresTotal].setStyle("-fx-font-size: 12 arial; "
-                        + "-fx-background-color: #1dbfdb; "
-                        + "-fx-text-fill: white;"
-                        + "-fx-background-radius: 35px;");
+							                        + "-fx-background-color: #1dbfdb; "
+							                        + "-fx-text-fill: white;"
+							                        + "-fx-background-radius: 35px;");
                 scoresTotalarr[scoresTotal].setTranslateX(300);
-                scoresTotalarr[scoresTotal].setTranslateY((scoresTotal * 30) + 50);
+                scoresTotalarr[scoresTotal].setTranslateY((scoresTotal * 40) + 50);
                 resultsPane.getChildren().addAll(scoresTotalarr[scoresTotal]);
 
             }
@@ -110,22 +110,22 @@ public class resultsMenu extends Scene {
                         + "-fx-background-color: #1dbfdb; "
                         + "-fx-text-fill: white;"
                         + "-fx-background-radius: 35px;");
-                resultsLabelarr[resultsLabels].setTranslateX(300);
-                resultsLabelarr[resultsLabels].setTranslateY((resultsLabels * 30) + 400);
+                resultsLabelarr[resultsLabels].setTranslateX(270);
+                resultsLabelarr[resultsLabels].setTranslateY((resultsLabels * 40) + 300);
                 resultsPane.getChildren().addAll(resultsLabelarr[resultsLabels]);
                 //resultsOutput(resultIn , resultsLabels);
                 //
             }
 
 
-            examButton = new Button("return to exam");
-            examButton.setStyle("-fx-font-size: 15 arial; "
-                    + "-fx-background-color: #1dbfdb; "
-                    + "-fx-text-fill: white;"
-                    + "-fx-background-radius: 25px;");
-            examButton.setTranslateY(500);
-            examButton.setTranslateX(50);
-            examButton.setOnAction(e -> {paneController.enterExamMenu();});
+//            examButton = new Button("return to exam");
+//            examButton.setStyle("-fx-font-size: 15 arial; "
+//                    + "-fx-background-color: #1dbfdb; "
+//                    + "-fx-text-fill: white;"
+//                    + "-fx-background-radius: 25px;");
+//            examButton.setTranslateY(500);
+//            examButton.setTranslateX(50);
+//            examButton.setOnAction(e -> {paneController.enterExamMenu();});
 
             menuButton = new Button("return to main menu");
             menuButton.setStyle("-fx-font-size: 15 arial; "
@@ -136,7 +136,7 @@ public class resultsMenu extends Scene {
             menuButton.setTranslateX(50);
             menuButton.setOnAction(e -> {paneController.enterMainMenu();});
 
-            resultsPane.getChildren().addAll(examButton, menuButton);
+            resultsPane.getChildren().addAll(menuButton);
 
             return resultsPane;
 

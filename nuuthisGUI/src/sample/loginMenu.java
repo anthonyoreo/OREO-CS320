@@ -20,14 +20,9 @@ public class loginMenu extends Scene{
 
     public loginMenu(Parent root, double width, double height) {
             super(root, width, height);
-
-
-
-        }
+    }
 
     public Pane login_Pane(paneController paneController){
-
-
 
         Pane login_Pane = new Pane();
         login_Pane.setStyle("-fx-background-color: white");

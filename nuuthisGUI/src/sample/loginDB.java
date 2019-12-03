@@ -13,7 +13,6 @@ public class loginDB {
     static Map<String, String> userPass = new HashMap<String, String>();
     static Properties properties = new Properties();
 
-
     public static void getData() throws IOException {
         properties.load(new FileInputStream("data.properties"));
         for (String key : properties.stringPropertyNames()) {
